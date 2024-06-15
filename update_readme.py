@@ -1,6 +1,6 @@
 import json
 import os
-import requests # type: ignore
+import requests
 
 def read_json_file(directory):
     """Reads all JSON file and returns a list of data."""

@@ -1,4 +1,1 @@
-PyGithub
-python-gitlab
-xmltodict
 requests

@@ -9,9 +9,9 @@ on:
     branches: [ "main" ]
 
   # Allows you to run this workflow manually from the Actions tab
-  # workflow_dispatch:
-  #   schedule: 
-  #     - cron: "0 * * * *"
+  workflow_dispatch:
+    schedule: 
+      - cron: "0 0 * * 0"
             # - - - - -
             # | | | | |
             # | | | | +---- Day of the week (0 - 7) (Sunday is both 0 and 7)
@@ -30,18 +30,18 @@ jobs:
     # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
-      - name: Checkout repository
-        uses: actions/checkout@v4
+      - name: Check out repository
+        uses: actions/checkout@v2
 
       # Set up Python environment 
       - name: Set up Python
-        uses: actions/setup-python@v4
+        uses: actions/setup-python@v2
         with:
           python-version: '3.x'  
 
       # Create a cache key based on the OS and the hash of the requirements.txt file
       - name: Configure pip caching
-        uses: actions/cache@v4
+        uses: actions/cache@v2
         with:
           path: ~/.cache/pip  # Cache the pip dependencies
           key: ${{ runner.os }}-pip-${{ hashFiles('**/requirements.txt') }}
@@ -51,7 +51,7 @@ jobs:
       # Install Python dependencies
       - name: Install Python dependencies
         run: |
-          pip install -r requirements.txt || true
+          pip install -r requirements.txt
 
       # Run the Python script to update README.md
       - name: Update README.md
