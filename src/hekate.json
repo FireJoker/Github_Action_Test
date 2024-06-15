@@ -1,0 +1,37 @@
+{
+    "url":"https://github.com/CTCaer/hekate",
+    "assetRegex":[".*hekate.*sc\\.zip"],
+    "customSteps":[
+        {
+            "action": "extract",
+            "source": ".*hekate.*\\.zip"
+        },
+        {
+            "action": "copy",
+            "source": "bootloader",
+            "fileRegex": ".*hekate.*\\.bin",
+            "destination": "bootloader/update.bin"
+        },
+        {
+            "action": "createDir",
+            "source": "atmosphere"
+        },
+        {
+            "action": "copy",
+            "source": "bootloader",
+            "fileRegex": ".*hekate.*\\.bin",
+            "destination": "atmosphere/reboot_payload.bin"
+        },
+        {
+            "action": "copy",
+            "source": "",
+            "fileRegex": ".*hekate.*\\.bin",
+            "destination": "payload.bin"
+        },
+        {
+            "action": "delete",
+            "source": "",
+            "fileRegex": "hekate_ctcaer_.*\\.bin"
+        }
+    ]
+}

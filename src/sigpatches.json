@@ -1,0 +1,10 @@
+{
+    "url":["https://sigmapatches.su/sigpatches.zip"],
+    "file":"sigpatches.zip",
+    "customSteps":[
+        {
+            "action": "extract",
+            "source": ".*[hekate|sigpatches].*\\.zip"
+        }
+    ]
+}
