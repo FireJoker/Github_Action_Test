@@ -6,27 +6,32 @@ from bs4 import BeautifulSoup
 from urllib.parse import urljoin
 from pathlib import Path
 
-def update_readme(readme_path, new_content):
-    """Updates the README.md file with the generated table."""
-    # with open(readme_path, 'w', encoding='utf-8') as file:
-    #     content = file.read()
+def update_readme(readme_path, new_content, marker_start, marker_end):
+    """
+    Updates a section of the README file marked by specific comments.
+
+    Args:
+        readme_path (str):  The path to the README file.
+        new_content (str):  The new content to insert between the markers.
+        marker_start (str): The start marker comment.
+        marker_end (str):   The end marker comment.
+    """
+    
+    with open(readme_path, 'r', encoding='utf-8') as file:
+        content = file.read()
     
     # Find the start and end positions of the markers
-    marker_start = "<!-- recent_releases starts -->"
-    marker_end = "<!-- recent_releases ends -->"
-    # start = content.find(marker_start) + len(marker_start)
-    # end = content.find(marker_end)
+    start = content.find(marker_start) + len(marker_start)
+    end = content.find(marker_end)
     
-    # if start == -1 or end == -1 or start > end:
-    #     raise ValueError("Markers not found or misordered in README file.")
+    if start == -1 or end == -1 or start > end:
+        raise ValueError("Markers not found or misordered in README file.")
     
     # Replace the content between the markers
-    new_content = f"{marker_start}\n{new_content}\n{marker_end}"
-    # updated_content = content[:start] + new_content + content[end:]
+    updated_content = f"{content[:start]}\n{new_content}\n{content[end:]}"
 
     with open(readme_path, 'w', encoding='utf-8') as file:
-        # file.write(updated_content)
-        file.write(new_content)
+        file.write(updated_content)
 
 def generate_markdown_table(data):
     """Generates a Markdown table from a list of dictionaries."""
@@ -41,7 +46,13 @@ def generate_markdown_table(data):
     # Extract rows
     rows = []
     for module_info in data:
-        row = " | ".join(str(module_info[header]) for header in headers)
+        row_items = []
+        for header in headers:
+            value = str(module_info[header])
+            if header == 'download_url':
+                value = f'[download]({value})'
+            row_items.append(value)
+        row = " | ".join(row_items)
         rows.append(row)
     
     # Combine into a Markdown table
@@ -145,5 +156,7 @@ if __name__ == "__main__":
     table = generate_markdown_table(data)
     
     # Update README.md file
-    update_readme(readme_path, table)
+    marker_start = "<!-- recent_releases starts -->"
+    marker_end = "<!-- recent_releases ends -->"
+    update_readme(readme_path, table,marker_start,marker_end)
 
