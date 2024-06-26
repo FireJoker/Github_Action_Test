@@ -8,25 +8,25 @@ from pathlib import Path
 
 def update_readme(readme_path, new_content):
     """Updates the README.md file with the generated table."""
-    with open(readme_path, 'w', encoding='utf-8') as file:
-        content = file.read()
+    # with open(readme_path, 'w', encoding='utf-8') as file:
+    #     content = file.read()
     
     # Find the start and end positions of the markers
     marker_start = "<!-- recent_releases starts -->"
     marker_end = "<!-- recent_releases ends -->"
-    start = content.find(marker_start) + len(marker_start)
-    end = content.find(marker_end)
+    # start = content.find(marker_start) + len(marker_start)
+    # end = content.find(marker_end)
     
-    if start == -1 or end == -1 or start > end:
-        raise ValueError("Markers not found or misordered in README file.")
+    # if start == -1 or end == -1 or start > end:
+    #     raise ValueError("Markers not found or misordered in README file.")
     
     # Replace the content between the markers
     new_content = f"{marker_start}\n{new_content}\n{marker_end}"
-    updated_content = content[:start] + new_content + content[end:]
-    
-    with open(readme_path, 'w', encoding='utf-8') as file:
-        file.write(updated_content)
+    # updated_content = content[:start] + new_content + content[end:]
 
+    with open(readme_path, 'w', encoding='utf-8') as file:
+        # file.write(updated_content)
+        file.write(new_content)
 
 def generate_markdown_table(data):
     """Generates a Markdown table from a list of dictionaries."""
@@ -52,7 +52,7 @@ def generate_markdown_table(data):
 def read_json_files(directory):
     """Read all json files from given directory."""
 
-    json_data = {}
+    json_data_list = []
     directory_path = Path(directory)
     
     for file_path in directory_path.glob('*.json'):
@@ -64,14 +64,13 @@ def read_json_files(directory):
                 data = fetch_repo_info(module)
             elif 'url' in module:
                 data = fetch_url_info(module)
-
                 
-            json_data[file_path.name] = data
+            json_data_list.append(data)
         except FileNotFoundError:
             print(f"File {file_path} not found.")
         except json.JSONDecodeError:
             print(f"Error decoding JSON from file {file_path}.")
-    return json_data
+    return json_data_list
 
 
 def fetch_repo_info(module):
