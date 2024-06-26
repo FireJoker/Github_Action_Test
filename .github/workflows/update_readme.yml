@@ -42,7 +42,7 @@ jobs:
       # Install Python dependencies
       - name: Install Python dependencies
         run: |
-          if [ -f ../requirements.txt ]; then pip3 install -r ../requirements.txt; fi
+          python -m pip install requests
 
       # Run the Python script to update README.md
       - name: Update README.md
