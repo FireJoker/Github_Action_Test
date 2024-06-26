@@ -1,0 +1,12 @@
+{
+    "name":"JKSV",
+    "repo":"J-D-K/JKSV",
+    "assetRegex":["JKSV.nro"],
+    "customSteps":[
+        {
+            "action": "move",
+            "source": "JKSV.nro",
+            "destination": "switch/JKSV.nro"
+        }
+    ]
+}

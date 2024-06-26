@@ -1,0 +1,11 @@
+{
+    "name":"sys-botbase",
+    "repo":"olliz0r/sys-botbase",
+    "assetRegex":["sys-botbase.*\\.zip"],
+    "customSteps":[
+        {
+            "action": "extract",
+            "source": "sys-botbase.*\\.zip"
+        }
+    ]
+}

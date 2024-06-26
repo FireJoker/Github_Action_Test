@@ -1,0 +1,12 @@
+{
+    "name":"DBI",
+    "repo":"rashevskyv/dbi",
+    "assetRegex":["DBI.nro"],
+    "customSteps":[
+        {
+            "action": "move",
+            "source": "DBI.nro",
+            "destination": "switch/DBI.nro"
+        }
+    ]
+}

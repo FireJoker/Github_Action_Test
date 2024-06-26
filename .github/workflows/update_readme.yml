@@ -8,6 +8,10 @@ on:
   push:
     branches: [ "main" ]
 
+defaults:
+  run:
+    working-directory: src
+
   # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
     schedule: 
@@ -38,35 +42,26 @@ jobs:
         uses: actions/setup-python@v2
         with:
           python-version: '3.x'  
-
-      # Create a cache key based on the OS and the hash of the requirements.txt file
-      - name: Configure pip caching
-        uses: actions/cache@v2
-        with:
-          path: ~/.cache/pip  # Cache the pip dependencies
-          key: ${{ runner.os }}-pip-${{ hashFiles('**/requirements.txt') }}
-          restore-keys: |
-            ${{ runner.os }}-pip-
-            
+         
       # Install Python dependencies
       - name: Install Python dependencies
         run: |
-          pip install -r requirements.txt
+          if [ -f ../requirements.txt ]; then pip3 install -r ../requirements.txt; fi
 
       # Run the Python script to update README.md
       - name: Update README.md
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
-          python update_readme.py
+          python ./update_readme.py -gt="$GITHUB_TOKEN"
 
       # Commit and push changes
       - name: Commit and push if README changed
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
           git diff
           git config --global user.name 'github-actions'
           git config --global user.email 'github-actions@github.com'
           git diff --quiet || (git add README.md && git commit -m "Updated README")
           git push
-        env:
-          # Use the GitHub token for authentication
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-

@@ -1,6 +1,7 @@
 {
-    "url":"https://github.com/Atmosphere-NX/Atmosphere",
-    "assetRegex":["fusee.bin",".*atmosphere.*\\.zip"],
+    "name": "atmosphere",
+    "repo":"Atmosphere-NX/Atmosphere",
+    "assetRegex":[".*atmosphere.*\\.zip","fusee.bin"],
     "customSteps":[
         {
             "action": "extract",
@@ -30,6 +31,12 @@
             "source": "atmosphere/config/system_settings.ini",
             "target": "; dmnt_always_save_cheat_toggles = u8!0x0",
             "replacement":"dmnt_always_save_cheat_toggles = u8!0x0"
+        },
+        {
+            "action": "replaceText",
+            "source": "atmosphere/config/system_settings.ini",
+            "target": "; usb30_force_enabled = u8!0x0",
+            "replacement":"usb30_force_enabled = u8!0x0"
         },
         {
             "action": "createDir",

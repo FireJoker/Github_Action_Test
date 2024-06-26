@@ -1,5 +1,6 @@
 {
-    "url":"https://github.com/CTCaer/hekate",
+    "name":"hekate",
+    "repo":"CTCaer/hekate",
     "assetRegex":[".*hekate.*sc\\.zip"],
     "customSteps":[
         {
